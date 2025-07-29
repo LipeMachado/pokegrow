@@ -159,13 +159,17 @@ export const usePokemonList = () => {
   return useQuery({
     queryKey: QUERY_KEYS.pokemons(searchParams),
     queryFn: async () => {
-      const page = Math.floor(searchParams.offset / searchParams.limit) + 1;
+      const hasFilters = searchParams.name || searchParams.types;
+      const page = hasFilters
+        ? 1
+        : Math.floor(searchParams.offset / searchParams.limit) + 1;
+      const limit = hasFilters ? 300 : searchParams.limit;
 
       if (USE_GRAPHQL) {
         try {
           const result = await graphqlPokemonService.getPokemonList(
             page,
-            searchParams.limit
+            limit
           );
 
           const pokemonList = result.pokemons.map((pokemon) => {
@@ -230,7 +234,12 @@ export const usePokemonList = () => {
       }
 
       try {
-        const result = await pokemonService.getPokemonList(searchParams);
+        const modifiedParams = {
+          ...searchParams,
+          limit: hasFilters ? 300 : searchParams.limit,
+          offset: hasFilters ? 0 : searchParams.offset,
+        };
+        const result = await pokemonService.getPokemonList(modifiedParams);
 
         if (searchParams.sort) {
           result.pokemons.sort((a, b) => {

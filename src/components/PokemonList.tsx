@@ -41,14 +41,38 @@ export function PokemonList() {
   const totalCount = pokemonData?.pokemon_aggregate.aggregate.count || 0
   const types = typesData?.pokemon_v2_type || []
 
-  const filteredPokemons = showOnlyFavorites
+  const basePokemons = showOnlyFavorites
     ? (favoritePokemons || [])
     : pokemons
 
+  const filteredPokemons = basePokemons
+    .filter((pokemon: Pokemon) => {
+      const matchesName = !searchTerm ||
+        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+
+      const matchesType = !selectedTypes ||
+        pokemon.types.some((typeData: { pokemon_v2_type: { name: string } }) =>
+          typeData.pokemon_v2_type.name === selectedTypes.toLowerCase()
+        )
+
+      return matchesName && matchesType
+    })
+    .sort((a: Pokemon, b: Pokemon) => {
+      switch (sortOrder) {
+        case 'name-asc':
+          return a.name.localeCompare(b.name)
+        case 'name-desc':
+          return b.name.localeCompare(a.name)
+        case 'power-desc':
+          return (b.powerLevel || 0) - (a.powerLevel || 0)
+        case 'power-asc':
+        default:
+          return (a.powerLevel || 0) - (b.powerLevel || 0)
+      }
+    })
+
   useEffect(() => {
-    if (!showOnlyFavorites) {
-      setCurrentPage(1)
-    }
+    setCurrentPage(1)
   }, [searchTerm, selectedTypes, sortOrder, showOnlyFavorites, setCurrentPage])
 
   if (error) {
@@ -142,8 +166,21 @@ export function PokemonList() {
           </div>
         </div>
 
-        <div className="text-sm text-gray-400">
-          {(isLoading || (showOnlyFavorites && favoritesLoading)) ? 'Carregando...' : `${filteredPokemons.length} Pokémon${filteredPokemons.length !== 1 ? 's' : ''} ${showOnlyFavorites ? 'favorito' : 'encontrado'}${filteredPokemons.length !== 1 ? 's' : ''}`}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-gray-400">
+          <div>
+            {(isLoading || (showOnlyFavorites && favoritesLoading)) ? 'Carregando...' :
+              showOnlyFavorites ? `${filteredPokemons.length} Pokémon${filteredPokemons.length !== 1 ? 's' : ''} favorito${filteredPokemons.length !== 1 ? 's' : ''}` :
+                (searchTerm || selectedTypes) ? `${filteredPokemons.length} de ${totalCount.toLocaleString()} pokémons` :
+                  `${totalCount.toLocaleString()} pokémons disponíveis`
+            }
+          </div>
+          {!showOnlyFavorites && !isLoading && (searchTerm || selectedTypes) && (
+            <div className="text-xs text-gray-500">
+              {searchTerm && `Busca: "${searchTerm}"`}
+              {searchTerm && selectedTypes && ' • '}
+              {selectedTypes && `Tipo: ${selectedTypes.charAt(0).toUpperCase() + selectedTypes.slice(1)}`}
+            </div>
+          )}
         </div>
       </motion.div>
 
@@ -154,7 +191,7 @@ export function PokemonList() {
         </div>
       )}
 
-      {!isLoading && !showOnlyFavorites && totalCount > 20 && (
+      {!isLoading && !showOnlyFavorites && !searchTerm && !selectedTypes && totalCount > 20 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -226,7 +263,7 @@ export function PokemonList() {
         </motion.div>
       )}
 
-      {!isLoading && !showOnlyFavorites && totalCount > 20 && (
+      {!isLoading && !showOnlyFavorites && !searchTerm && !selectedTypes && totalCount > 20 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
