@@ -21,7 +21,7 @@ export function Header() {
               transition={{ duration: 0.2 }}
             >
               <span className="text-white font-bold text-3xl">
-                Pokefy
+                Pokegrow
               </span>
             </motion.div>
           </div>
