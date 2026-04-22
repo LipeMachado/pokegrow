@@ -1,43 +1,34 @@
-# 🎯 Pokéfy - Sistema de Listagem de Pokémons
+# Pokéfy - Sistema de Listagem de Pokémons
 
 Uma aplicação moderna de Pokédex construída com React, TypeScript e Tailwind CSS, desenvolvida como teste técnico para demonstrar habilidades de desenvolvimento frontend.
 
-## ✨ Funcionalidades Implementadas
+## Funcionalidades Implementadas
 
-### 📋 **Requisitos Atendidos**
+### **Requisitos Atendidos**
 
 - **✅ Listagem de Pokémons**: Exibe lista paginada com nome, imagem e nível de força
 - **✅ Ordenação**: Funcionalidade para ordenar por nível de força (ascendente/descendente)
 - **✅ Modal de Detalhes**: Ao clicar, exibe nome, imagem, tipos, nível de força e habilidades
 - **✅ Interface Responsiva**: Funciona perfeitamente em desktop e mobile
 
-### 🎮 **Funcionalidades Extras**
+### **Funcionalidades Extras**
 
-- 🔍 **Busca por Nome**: Localização rápida de Pokémons
-- 🎨 **Filtros por Tipo**: Filtrar por qualquer tipo de Pokémon
-- ❤️ **Sistema de Favoritos**: Marcar Pokémons como favoritos
-- 📱 **Design Moderno**: Interface glassmorphism com animações suaves
-- ⚡ **GraphQL + REST**: API GraphQL com fallback para REST
-- 🖼️ **Imagens Otimizadas**: Carregamento lazy e fallback automático
+- **Busca por Nome**: Localização rápida de Pokémons
+- **Filtros por Tipo**: Filtrar por qualquer tipo de Pokémon
+- **Sistema de Favoritos**: Marcar Pokémons como favoritos
+- **Design Moderno**: Interface glassmorphism com animações suaves
+- **GraphQL + REST**: API GraphQL com fallback para REST
+- **Imagens Otimizadas**: Carregamento lazy e fallback automático
 
-## 🛠️ Tecnologias Utilizadas
+### **Tecnologias Utilizadas**
 
-### **Conforme Especificação do Teste**
+- **React 19**: Framework principal com hooks modernos
+- **Jotai**: Gerenciamento de estado atômico
+- **React Query**: Cache e sincronização de dados
+- **Framer Motion**: Animações fluidas e interativas
+- **Lucide React**: Ícones modernos e consistentes
 
-- ⚡ **Vite**: Framework escolhido para desenvolvimento rápido
-- 🎨 **Tailwind CSS**: Framework CSS utility-first para estilização
-- 🌐 **PokeAPI**: API pública oficial dos Pokémons (GraphQL + REST)
-- 🔷 **TypeScript**: Tipagem estática para maior robustez
-
-### **Tecnologias Complementares**
-
-- ⚛️ **React 19**: Framework principal com hooks modernos
-- 🎯 **Jotai**: Gerenciamento de estado atômico
-- 🔄 **React Query**: Cache e sincronização de dados
-- 🎬 **Framer Motion**: Animações fluidas e interativas
-- 🎭 **Lucide React**: Ícones modernos e consistentes
-
-## 🚀 Como Executar Localmente
+## Como Executar Localmente
 
 ### **Pré-requisitos**
 
@@ -64,7 +55,7 @@ npm run build
 npm run preview
 ```
 
-## 📊 Funcionalidades Detalhadas
+## Funcionalidades Detalhadas
 
 ### **1. Listagem Principal**
 
@@ -121,15 +112,8 @@ src/
     └── pokemon.ts      # Tipos dos dados
 ```
 
-## 🔌 APIs Utilizadas
+## APIs Utilizadas
 
 - **PokeAPI GraphQL**: `https://pokeapi.co/docs/graphql` (Principal)
 - **PokeAPI REST**: `https://pokeapi.co/api/v2` (Fallback)
 - **Sprites GitHub**: `https://raw.githubusercontent.com/PokeAPI/sprites/master/`
-
-## ⚡ Performance
-
-- **Carregamento lazy** de imagens
-- **Paginação** para evitar sobrecarga
-- **Cache inteligente** com React Query
-- **Otimizações** de re-renderização com useMemo/useCallback
