@@ -89,7 +89,7 @@ Exibe todas as informações solicitadas:
 - Filtro por tipos de Pokémon
 - Visualização apenas de favoritos
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 src/
